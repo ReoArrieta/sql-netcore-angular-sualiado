@@ -1,0 +1,236 @@
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="icon">queue</mat-icon>
+      Agregar Pérdida
+    </ng-template>
+
+    <form
+      [formGroup]="formNewLost"
+      autocomplete="off"
+      (ngSubmit)="addLost(formNewLost.value)"
+    >
+      <div class="first">
+        <button
+          type="button"
+          class="boton"
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/admin/perdidas']"
+        >
+          <mat-icon>reply</mat-icon>
+        </button>
+
+        <mat-form-field class="pequeno" appearance="fill">
+          <mat-label>Admin</mat-label>
+          <input type="text" matInput formControlName="admin" />
+        </mat-form-field>
+      </div>
+
+      <div formArrayName="detalles" class="second">
+        <!-- <div
+          *ngFor="let detail of detailsArray.controls; let i = index"
+          [formGroupName]="i"
+        > -->
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Costo</th>
+              <th>Cantidad</th>
+              <th>Descripción</th>
+              <th *ngIf="detailsArray.controls.length > 1">Accción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let detail of detailsArray.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <td>
+                <mat-form-field appearance="fill" class="largo">
+                  <mat-label>Producto</mat-label>
+                  <mat-select formControlName="idProductoPerdida">
+                    <mat-option
+                      *ngFor="let product of products"
+                      [value]="product.id"
+                      (click)="findProduct(product.id, i)"
+                    >
+                      {{ product.nombreProducto }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="
+                      this.detailValue('idProductoPerdida', i).errors?.required
+                    "
+                    >Requerido</mat-error
+                  >
+                </mat-form-field>
+              </td>
+
+              <td>
+                <mat-form-field class="pequeno" appearance="fill">
+                  <mat-label>Costo</mat-label>
+                  <input
+                    type="number"
+                    matInput
+                    formControlName="costoProducto"
+                  />
+                  <mat-error
+                    *ngIf="
+                      this.detailValue('costoProducto', i).errors?.required
+                    "
+                    >Requerido</mat-error
+                  >
+                  <mat-error
+                    *ngIf="this.detailValue('costoProducto', i).errors?.min"
+                    >Mín 1000$</mat-error
+                  >
+                </mat-form-field>
+              </td>
+
+              <td>
+                <mat-form-field class="pequeno" appearance="fill">
+                  <mat-label>Cantidad</mat-label>
+                  <input
+                    type="number"
+                    matInput
+                    formControlName="cantidadPerdida"
+                  />
+                  <mat-error
+                    *ngIf="
+                      this.detailValue('cantidadPerdida', i).errors?.required
+                    "
+                    >Requerido</mat-error
+                  >
+                  <mat-error
+                    *ngIf="this.detailValue('cantidadPerdida', i).errors?.min"
+                    >Mín 1 Producto</mat-error
+                  >
+                  <mat-error
+                    *ngIf="
+                      this.detailValue('cantidadPerdida', i).errors
+                        ?.amountValidation
+                    "
+                    >Máx {{ this.stock }} Productos</mat-error
+                  >
+                </mat-form-field>
+              </td>
+
+              <td>
+                <mat-form-field class="largo" appearance="fill">
+                  <mat-label>Descripción</mat-label>
+                  <textarea
+                    matInput
+                    formControlName="descripcionPerdida"
+                  ></textarea>
+                  <mat-error
+                    *ngIf="
+                      this.detailValue('descripcionPerdida', i).errors?.required
+                    "
+                    >Requerido</mat-error
+                  >
+                </mat-form-field>
+              </td>
+
+              <td *ngIf="detailsArray.controls.length > 1">
+                <button
+                  type="submit"
+                  mat-mini-fab
+                  color="warn"
+                  *ngIf="detailsArray.controls.length > 1"
+                  (click)="removeDetail(i)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- <mat-form-field appearance="fill" class="largo">
+            <mat-label>Producto</mat-label>
+            <mat-select formControlName="idProductoPerdida">
+              <mat-option
+                *ngFor="let product of products"
+                [value]="product.id"
+                (click)="findProduct(product.id, i)"
+              >
+                {{ product.nombreProducto }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="this.detailValue('idProductoPerdida', i).errors?.required"
+              >Requerido</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field class="pequeno" appearance="fill">
+            <mat-label>Costo</mat-label>
+            <input type="number" matInput formControlName="costoProducto" />
+            <mat-error
+              *ngIf="this.detailValue('costoProducto', i).errors?.required"
+              >Requerido</mat-error
+            >
+            <mat-error *ngIf="this.detailValue('costoProducto', i).errors?.min"
+              >Mín 1000$</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field class="pequeno" appearance="fill">
+            <mat-label>Cantidad</mat-label>
+            <input type="number" matInput formControlName="cantidadPerdida" />
+            <mat-error
+              *ngIf="this.detailValue('cantidadPerdida', i).errors?.required"
+              >Requerido</mat-error
+            >
+            <mat-error
+              *ngIf="this.detailValue('cantidadPerdida', i).errors?.min"
+              >Mín 1 Producto</mat-error
+            >
+            <mat-error
+              *ngIf="
+                this.detailValue('cantidadPerdida', i).errors?.amountValidation
+              "
+              >Máx {{ this.stock }} Productos</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field class="largo" appearance="fill">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput formControlName="descripcionPerdida"></textarea>
+            <mat-error
+              *ngIf="this.detailValue('descripcionPerdida', i).errors?.required"
+              >Requerido</mat-error
+            >
+          </mat-form-field>
+
+          <button
+            type="submit"
+            mat-mini-fab
+            color="warn"
+            *ngIf="detailsArray.controls.length > 1"
+            (click)="removeDetail(i)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div> -->
+
+      </div>
+
+      <button
+        type="button"
+        mat-mini-fab
+        color="primary"
+        (click)="addDetail()"
+        [disabled]="!detailsArray.valid"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <button mat-raised-button [disabled]="!formNewLost.valid">
+        Agregar Pérdida
+      </button>
+    </form>
+  </mat-tab>
+</mat-tab-group>

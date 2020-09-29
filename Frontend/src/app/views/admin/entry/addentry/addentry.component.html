@@ -1,0 +1,209 @@
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="icon">queue</mat-icon>
+      Agregar Entrada
+    </ng-template>
+
+    <form [formGroup]="formNewEntry" (ngSubmit)="addEntry(formNewEntry.value)">
+      <div class="first">
+        <button
+        type="button"
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/admin/entradas']"
+        >
+          <mat-icon class="icon">arrow_back</mat-icon>Atras
+        </button>
+
+        <button type="button" mat-raised-button color="primary" (click)="openProvider()">
+          <mat-icon>assignment_ind</mat-icon> Proveedor
+        </button>
+
+        <button type="button" mat-raised-button color="primary" (click)="openProduct()">
+          <mat-icon>mobile_friendly</mat-icon> Producto
+        </button>
+      </div>
+
+      <mat-form-field class="pequeno" appearance="fill">
+        <mat-label>Admin</mat-label>
+        <input type="text" matInput formControlName="admin" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Proveedor</mat-label>
+        <mat-select formControlName="idProveedorEntrada" required>
+          <mat-option
+            *ngFor="let provider of providers"
+            value="{{ provider.id }}"
+          >
+            {{ provider.nombreProveedor }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formValue('idProveedorEntrada').errors?.required"
+          >Requerido</mat-error
+        >
+      </mat-form-field>
+
+      <div formArrayName="detalles" class="second">
+        <!-- <div
+          *ngFor="let detail of detailsArray.controls; let i = index"
+          [formGroupName]="i"
+        > -->
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Costo</th>
+              <th>Cantidad</th>
+              <th *ngIf="detailsArray.controls.length > 1">Accción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let detail of detailsArray.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <td>
+                <mat-form-field appearance="legacy" class="largo">
+                  <mat-label>Producto</mat-label>
+                  <mat-select formControlName="idProductoEntrada"  required>
+                    <mat-option
+                      *ngFor="let product of products"
+                      [value]="product.id"
+                      (click)="findProduct(product.id, i)"
+                    >
+                      {{ product.nombreProducto }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="
+                      detailsValue('idProductoEntrada', i).errors?.required
+                    "
+                    >Requerido</mat-error
+                  >
+                </mat-form-field>
+              </td>
+
+              <td>
+                <mat-form-field class="pequeno" appearance="legacy">
+                  <mat-label>Costo</mat-label>
+                  <input
+                    type="number"
+                    matInput
+                    formControlName="costoProducto"
+                    required
+                  />
+                  <mat-error
+                    *ngIf="detailsValue('costoProducto', i).errors?.required"
+                    >Requerido</mat-error
+                  >
+                  <mat-error
+                    *ngIf="detailsValue('costoProducto', i).errors?.min"
+                    >Mínimo 1000$</mat-error
+                  >
+                </mat-form-field>
+              </td>
+
+              <td>
+                <mat-form-field class="pequeno" appearance="legacy">
+                  <mat-label>Cantidad</mat-label>
+                  <input
+                    type="number"
+                    matInput
+                    formControlName="cantidadEntrada"
+                    required
+                  />
+                  <mat-error
+                    *ngIf="detailsValue('cantidadEntrada', i).errors?.required"
+                    >Requerido</mat-error
+                  >
+                  <mat-error
+                    *ngIf="detailsValue('cantidadEntrada', i).errors?.min"
+                    >Mín 1 producto</mat-error
+                  >
+                </mat-form-field>
+              </td>
+
+              <td *ngIf="detailsArray.controls.length > 1">
+                <button
+                  type="submit"
+                  mat-mini-fab
+                  color="warn"
+                  *ngIf="detailsArray.controls.length > 1"
+                  (click)="removeDetail(i)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- <mat-form-field appearance="fill" class="largo">
+            <mat-label>Producto</mat-label>
+            <mat-select formControlName="idProductoEntrada">
+              <mat-option
+                *ngFor="let product of products"
+                [value]="product.id"
+                (click)="findProduct(product.id, i)"
+              >
+                {{ product.nombreProducto }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="detailsValue('idProductoEntrada', i).errors?.required"
+              >Requerido</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field class="pequeno" appearance="fill">
+            <mat-label>Costo</mat-label>
+            <input type="number" matInput formControlName="costoProducto" />
+            <mat-error *ngIf="detailsValue('costoProducto', i).errors?.required"
+              >Requerido</mat-error
+            >
+            <mat-error *ngIf="detailsValue('costoProducto', i).errors?.min"
+              >Mínimo 1000$</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field class="pequeno" appearance="fill">
+            <mat-label>Cantidad</mat-label>
+            <input type="number" matInput formControlName="cantidadEntrada" />
+            <mat-error
+              *ngIf="detailsValue('cantidadEntrada', i).errors?.required"
+              >Requerido</mat-error
+            >
+            <mat-error *ngIf="detailsValue('cantidadEntrada', i).errors?.min"
+              >Mín 1 producto</mat-error
+            >
+          </mat-form-field>
+          <button
+            type="submit"
+            mat-mini-fab
+            color="warn"
+            *ngIf="detailsArray.controls.length > 1"
+            (click)="removeDetail(i)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button> -->
+        <!-- </div> -->
+      </div>
+
+      <button
+        type="button"
+        mat-mini-fab
+        color="primary"
+        (click)="addDetail()"
+        [disabled]="!detailsArray.valid"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <button mat-raised-button [disabled]="!formNewEntry.valid">
+        Agregar Entrada
+      </button>
+    </form>
+  </mat-tab>
+</mat-tab-group>

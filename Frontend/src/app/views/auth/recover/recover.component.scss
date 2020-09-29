@@ -1,0 +1,40 @@
+:host {
+  height: 100%;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  background-color: #293888;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.2) 100px,
+    transparent 0px,
+    transparent 200px
+  );
+  background-size: cover;
+}
+.mat-form-field {
+  width: 100%;
+  min-width: 300px;
+}
+mat-card-content,
+mat-card-title,
+mat-card-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+  width: 300px;
+}
+div button {
+  width: 100%;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  // min-width: 500px;
+}
+p.pc {
+  font-size: 1.1em;
+}
+.header-image {
+  background-image: url("/assets/img/logoA.png");
+  margin-left: 20px;
+}

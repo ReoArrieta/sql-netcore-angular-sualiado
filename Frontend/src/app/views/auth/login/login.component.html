@@ -1,0 +1,66 @@
+<mat-card>
+  <mat-card-header>
+    <a mat-card-avatar class="header-image" [routerLink]="['/']"></a>
+  </mat-card-header>
+  <mat-card-title>Iniciar sesión</mat-card-title>
+  <mat-card-content>
+    <form
+      [formGroup]="formLogin"
+      autocomplete="off"
+      (ngSubmit)="login(formLogin.value)"
+    >
+    <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Correo electrónico</mat-label>
+          <input
+            matInput
+            placeholder="Ej. rafael@ejemplo.com"
+            (paste)="(false)"
+            formControlName="correo"
+            required
+          />
+          <mat-error *ngIf="email.errors?.required">Requerido</mat-error>
+          <mat-error *ngIf="email.errors?.pattern">Correo inválido</mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            [type]="hide ? 'text' : 'password'"
+            placeholder="*********"
+            (paste)="(false)"
+            formControlName="contrasena"
+            required
+          />
+          <mat-error *ngIf="formLogin.invalid">Requerido</mat-error>
+          <button
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility" : "visibility_off" }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </p>
+      <p>
+        <a mat-button color="primary" class="d" routerLink="/recuperar"
+          >¿Olvidó su contraseña?</a
+        >
+        <a mat-button color="primary" routerLink="/registrarse"
+          >¿No tienes cuenta?</a
+        >
+      </p>
+      <div>
+        <button mat-raised-button color="primary">
+          Ingresar
+          <mat-progress-bar *ngIf="loading" mode="buffer"></mat-progress-bar>
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

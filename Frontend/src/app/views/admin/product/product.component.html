@@ -1,0 +1,111 @@
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="icon">laptop</mat-icon>
+      Productos
+    </ng-template>
+    <div>
+      <button
+        class="boton"
+        mat-raised-button
+        color="primary"
+        (click)="openAdd()"
+      >
+        <mat-icon class="icon">add</mat-icon>Producto
+      </button>
+      <mat-form-field>
+        <mat-label>Buscar</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event.target.value)"
+          placeholder="Ej. Cargador"
+          #input
+        />
+      </mat-form-field>
+    </div>
+
+    <div id="div" class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.nombreProducto }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="categoria">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoría</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.categoriaEspecifica }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="costo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Costo</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.costoProducto }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="precio">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.precioProducto }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="existencia">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.existenciaProducto }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item color="warn">
+                <mat-icon color="accent">visibility_off</mat-icon>
+                <span>Deshabilitar</span>
+              </button>
+              <button (click)="openEdit(element)" mat-menu-item color="basic">
+                <mat-icon color="primary">edit</mat-icon>
+                <span>Editar</span>
+              </button>
+              <button (click)="delete(element)" mat-menu-item color="warn">
+                <mat-icon color="warn">delete</mat-icon>
+                <span>Eliminar</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">
+            No hay resultados para "{{ input.value }}"
+          </td>
+        </tr>
+      </table>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20, 40, 80, 160]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="icon">category</mat-icon>
+      Categorías
+    </ng-template>
+    <!-- Content -->
+    <app-category></app-category>
+  </mat-tab>
+</mat-tab-group>

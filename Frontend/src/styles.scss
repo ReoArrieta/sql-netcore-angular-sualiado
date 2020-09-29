@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.content-home {
+  position: absolute;
+  top: 64.4px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  overflow-y: scroll;
+  background: #232323;
+  color: #fff;
+}
+.content-home-mob {
+  position: absolute;
+  top: 56px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  overflow-y: scroll;
+  background: #232323;
+  color: #fff;
+}
+.sidenav-content-home:first-child {
+  margin: 10px 5px 5px 5px;
+}
+mat-tab-group{
+  position: sticky;
+}

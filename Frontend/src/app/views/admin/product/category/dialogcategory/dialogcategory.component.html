@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>
+  {{ category ? "Editar Categoría" : "Agregar Categoría" }}
+</h1>
+
+<form
+  [formGroup]="formCategory"
+  (submit)="category ? edit(formCategory.value) : add(formCategory.value)"
+>
+  <div mat-dialog-content>
+    <input type="hidden" formControlName="id" />
+
+    <mat-form-field>
+      <mat-label>Categoría General</mat-label>
+      <mat-select formControlName="categoriaGeneral" required>
+        <mat-option value="Celulares">Celulares</mat-option>
+        <mat-option value="Computación">Computación</mat-option>
+      </mat-select>
+      <mat-error *ngIf="formValue('categoriaGeneral').errors?.required"
+        >Requerido</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Categoría Específica</mat-label>
+      <input matInput formControlName="categoriaEspecifica" required />
+      <mat-error *ngIf="formValue('categoriaEspecifica').errors?.required"
+        >Requerido</mat-error
+      >
+      <mat-error *ngIf="formValue('categoriaEspecifica').errors?.singleName"
+        >Categoría Existente</mat-error
+      >
+      <mat-error *ngIf="formValue('categoriaEspecifica').errors?.maxlength"
+        >Máximo 30 caracteres</mat-error
+      >
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button type="button" mat-raised-button (click)="close()">Cancelar</button>
+    <button mat-raised-button color="primary">
+      {{ category ? "Actualizar" : "Guardar" }}
+    </button>
+  </div>
+</form>

@@ -1,0 +1,163 @@
+<app-toolbar></app-toolbar>
+<div [class.content-home]="!deviceXs" [class.content-home-mob]="deviceXs">
+  <div class="dsc-carousel" [ngStyle]="{ 'min-height': finalHeight }">
+    <div class="dsc-carousel__btns">
+      <button mat-icon-button (click)="setBack()">
+        <mat-icon>arrow_back_ios</mat-icon>
+      </button>
+      <button mat-icon-button (click)="setNext()">
+        <mat-icon>arrow_forward_ios</mat-icon>
+      </button>
+    </div>
+    <div class="dsc-carousel__content">
+      <ng-container *ngFor="let section of items">
+        <div
+          class="dsc-carousel__content-item"
+          [ngStyle]="{
+            'background-image': 'url(' + section.image + ')',
+            'margin-left': section.marginLeft + '%'
+          }"
+        >
+          <h1>
+            {{ section.title.first }}
+            <span *ngIf="!deviceXs && !deviceSm">
+              {{ section.title.second }}</span
+            >
+          </h1>
+          <p *ngIf="!deviceXs && !deviceSm">{{ section.subtitle }}</p>
+          <p *ngIf="deviceXs || deviceSm">{{ section.title.second }}</p>
+        </div>
+      </ng-container>
+    </div>
+    <div class="dsc-carousel__steps">
+      <div
+        class="dsc-carousel__steps-step 
+              dsc-carousel__steps-step-{{
+          currentPosition === item.id ? 'active' : ''
+        }}"
+        *ngFor="let item of items"
+        (click)="setCurrentPosition(item.id)"
+      ></div>
+    </div>
+  </div>
+  <!-- <hr /> -->
+  <div class="grid">
+    <!-- <div class="element1">
+      </div> -->
+    <div class="category">últimos agregados</div>
+    <div class="container">
+      <div class="card">
+        <div class="imgBx">
+          <img src="../../../../assets/img/One 4 GB.PNG" />
+        </div>
+        <div class="contentBx">
+          <h2>Memoria USB 4 GB Onedigital</h2>
+          <h3>$ 15.000 COP</h3>
+          <a [routerLink]="['/productos/Memoria USB 4 GB Onedigital']"
+            >Comprar ahora</a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card">
+        <div class="imgBx">
+          <img src="../../../../assets/img/One 8 GB.PNG" />
+        </div>
+        <div class="contentBx">
+          <h2>Memoria USB 8 GB Onedigital</h2>
+          <h3>$ 20.000 COP</h3>
+          <a [routerLink]="['/productos/Memoria USB 8 GB Onedigital']"
+            >Comprar ahora</a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card">
+        <div class="imgBx">
+          <img src="../../../../assets/img/One 16 GB.PNG" />
+        </div>
+        <div class="contentBx">
+          <h2>Memoria USB 16 GB Onedigtal</h2>
+          <h3>$ 28.000 COP</h3>
+          <a [routerLink]="['/productos/Memoria USB 16 GB Onedigital']"
+            >Comprar ahora</a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card">
+        <div class="imgBx">
+          <img src="../../../../assets/img/One 32 GB.PNG" />
+        </div>
+        <div class="contentBx">
+          <h2>Memoria USB 32 GB Onedigtal</h2>
+          <h3>$ 35.000 COP</h3>
+          <a [routerLink]="['/productos/Memoria USB 32 GB Onedigital']"
+            >Comprar ahora</a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="category">más vendidos</div>
+    <div class="container">
+      <div class="card">
+        <div class="imgBx">
+          <img src="../../../../assets/img/One 64 GB.PNG" />
+        </div>
+        <div class="contentBx">
+          <h2>Memoria USB 64 GB Onedigtal</h2>
+          <h3>$ 50.000 COP</h3>
+          <a [routerLink]="['/productos/Memoria USB 64 GB Onedigital']"
+            >Comprar ahora</a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card">
+        <div class="imgBx">
+          <img src="../../../../assets/img/Mini Teclado.PNG" />
+        </div>
+        <div class="contentBx">
+          <h2>Mini Teclado inalambrico Touchpad Android, Tv, Windows</h2>
+          <h3>$ 45.000 COP</h3>
+          <a
+            [routerLink]="[
+              '/productos/Mini Teclado inalambrico Touchpad Android, Tv, Windows'
+            ]"
+            >Comprar ahora</a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card">
+        <div class="imgBx">
+          <img src="../../../../assets/img/mouse gamer.png" />
+        </div>
+        <div class="contentBx">
+          <h2>Mouse Gamer VSG EON Retroiluminado</h2>
+          <h3>$ 18.000 COP</h3>
+          <a [routerLink]="['/productos/Mouse Gamer VSG EON Retroiluminado']">Comprar ahora</a>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card">
+        <div class="imgBx">
+          <img src="../../../../assets/img/teclado gamer.PNG" />
+        </div>
+        <div class="contentBx">
+          <h2>Teclado USB Gamer WIA W-KG02 Luces Led</h2>
+          <h3>$ 35.000 COP</h3>
+          <a [routerLink]="['/productos/Teclado USB Gamer WIA W-KG02 Luces Led']">Comprar ahora</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer">Copyright © Todos los Derechos Reservado 2020</div>
+  </div>
+  <!-- </div> -->
+</div>

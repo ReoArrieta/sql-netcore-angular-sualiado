@@ -1,0 +1,25 @@
+<app-toolbar></app-toolbar>
+<div
+  class="grid"
+  [class.content-home]="!deviceXs"
+  [class.content-home-mob]="deviceXs"
+>
+  <div class="search">Buscar: ___________________________</div>
+  <div *ngFor="let product of products">
+    <div class="container">
+      <div class="card">
+        <div class="imgBx">
+          <img src="{{ product.imagenProducto }}" />
+        </div>
+        <div class="contentBx">
+          <h2>{{ product.nombreProducto }}</h2>
+          <h3>$ {{ product.precioProducto }} COP</h3>
+          <a routerLink="/productos/{{ product.nombreProducto }}"
+            >Comprar ahora</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">Copyright © Todos los Derechos Reservado 2020</div>
+</div>

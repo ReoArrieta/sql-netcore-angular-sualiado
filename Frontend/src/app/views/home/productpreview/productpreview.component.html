@@ -1,0 +1,51 @@
+<app-toolbar></app-toolbar>
+<div [class.content-home]="!deviceXs" [class.content-home-mob]="deviceXs">
+  <div class="container">
+    <div class="card" *ngFor="let product of product">
+      <div class="productBackground">
+        <a routerLink="./" class="share"><mat-icon>share</mat-icon></a>
+        <img
+          src="{{ product.imagenProducto }}"
+          alt="Producto"
+          class="product show"
+          color="blue"
+        />
+        <!-- <img src="img/One 8 GB.PNG" alt="" class="product" color="green" />
+        <img src="img/One 16 GB.PNG" alt="" class="product" color="orange" />
+        <img src="img/One 32 GB.PNG" alt="" class="product" color="red" />
+        <img src="img/One 64 GB.PNG" alt="" class="product" color="black" /> -->
+      </div>
+
+      <div class="info">
+        <div class="productName">
+          <div>
+            <h1 class="big">{{ product.nombreProducto }}</h1>
+            <!-- <span class="new">nuevo</span> -->
+          </div>
+          <h3 class="small">Disponibles: {{ product.existenciaProducto }}</h3>
+        </div>
+        <div class="description">
+          <h3 class="title">descripción</h3>
+          <p class="text">{{ product.descripcionProducto }}</p>
+        </div>
+        <div class="image-container">
+          <h3 class="title">Imágenes</h3>
+          <div class="images">
+            <span class="image active">1</span>
+            <span class="image">2</span>
+            <span class="image">3</span>
+            <span class="image">4</span>
+            <span class="image">5</span>
+          </div>
+        </div>
+        <div class="buy-price">
+          <a routerLink="./" class="buy">Comprar</a>
+          <div class="price">
+            <mat-icon>attach_money</mat-icon>
+            <h1>{{ product.precioProducto }} COP</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<h1 mat-dialog-title>
+  {{ product ? "Editar Producto" : "Agregar Producto" }}
+</h1>
+
+<form
+  [formGroup]="formProduct"
+  (submit)="product ? edit(formProduct.value) : add(formProduct.value)"
+>
+  <div mat-dialog-content>
+    <input type="hidden" formControlName="id" />
+
+    <mat-form-field class="largo">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombreProducto" required />
+      <mat-error *ngIf="formValue('nombreProducto').errors?.required"
+        >Requerido</mat-error
+      >
+      <mat-error *ngIf="formValue('nombreProducto').errors?.singleName"
+        >Producto Existente</mat-error
+      >
+      <mat-error *ngIf="formValue('nombreProducto').errors?.maxlength"
+        >Máximo 100 caracteres</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="largo">
+      <mat-label>Categoría</mat-label>
+      <mat-select formControlName="idCategoriaProducto" required>
+        <mat-option *ngFor="let category of categories" [value]="category.id">
+          {{ category.categoriaEspecifica }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="formValue('idCategoriaProducto').errors?.required"
+        >Requerido</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="pequeno">
+      <mat-label>Costo</mat-label>
+      <input type="number" matInput formControlName="costoProducto" required />
+      <mat-error *ngIf="formValue('costoProducto').errors?.required"
+        >Requerido</mat-error
+      >
+      <mat-error *ngIf="formValue('costoProducto').errors?.min"
+        >Min 700$</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="pequeno">
+      <mat-label>Precio</mat-label>
+      <input type="number" matInput formControlName="precioProducto" required />
+      <mat-error *ngIf="formValue('precioProducto').errors?.required"
+        >Requerido</mat-error
+      >
+      <mat-error *ngIf="formValue('precioProducto').errors?.min"
+        >Min 1000$</mat-error
+      >
+      <mat-error
+        *ngIf="
+          formValue('precioProducto').errors?.priceValidation &&
+          !formValue('precioProducto').errors?.min
+        "
+        >{{
+          formValue("precioProducto").errors?.priceValidation.message
+        }}</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="largo">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="descripcionProducto"></textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button class="boton" type="button" mat-raised-button (click)="close()">
+      Cancelar
+    </button>
+    <button class="boton" mat-raised-button color="primary">
+      {{ product ? "Actualizar" : "Guardar" }}
+    </button>
+  </div>
+</form>

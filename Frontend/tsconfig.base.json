@@ -1,0 +1,46 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@models/*": [
+        "src/app/models/*"
+      ],
+      "@services/*": [
+        "src/app/services/*"
+      ],
+      "@security/*": [
+        "src/app/security/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@views/*": [
+        "src/app/views/*"
+      ],
+      "@admin/*": [
+        "src/app/views/admin/*"
+      ],
+      "@home/*": [
+        "src/app/views/home/*"
+      ],
+      "@app/*": [
+        "src/app/*"
+      ]
+    },
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "es2020",
+    "lib": [
+      "es2018",
+      "dom"
+    ]
+  }
+}

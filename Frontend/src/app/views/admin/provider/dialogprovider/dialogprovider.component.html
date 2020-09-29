@@ -1,0 +1,119 @@
+<h1 mat-dialog-title>
+  {{ provider ? "Editar Proveedor" : "Agregar Proveedor" }}
+</h1>
+
+<form
+  [formGroup]="formProvider"
+  (submit)="provider ? edit(formProvider.value) : add(formProvider.value)"
+  autocomplete="off"
+>
+  <div mat-dialog-content>
+    <input type="hidden" formControlName="id" />
+
+    <mat-form-field class="largo">
+      <mat-label>Nombre</mat-label>
+      <input type="text" matInput formControlName="nombreProveedor" required />
+      <mat-error *ngIf="formValue('nombreProveedor').errors?.required"
+        >Requerido</mat-error
+      >
+      <mat-error *ngIf="formValue('nombreProveedor').errors?.singleName"
+        >Proveedor Existente</mat-error
+      >
+      <mat-error *ngIf="formValue('nombreProveedor').errors?.maxlength"
+        >Máximo 20 carácteres</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="largo">
+      <mat-label>Nit</mat-label>
+      <input type="text" matInput formControlName="nitProveedor" required />
+      <mat-error *ngIf="formValue('nitProveedor').errors?.required"
+        >Requerido</mat-error
+      >
+      <mat-error *ngIf="formValue('nitProveedor').errors?.singleNit"
+        >Nit Existente</mat-error
+      >
+      <mat-error *ngIf="formValue('nitProveedor').errors?.pattern"
+        >Solo números</mat-error
+      >
+      <mat-error
+        *ngIf="
+          formValue('nitProveedor').errors?.maxlength &&
+          !formValue('nitProveedor').errors?.pattern
+        "
+        >Máximo 20 carácteres</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="largo">
+      <mat-label>Dirección</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="direccionProveedor"
+        required
+      />
+      <mat-error *ngIf="formValue('direccionProveedor').errors?.required"
+        >Requerido</mat-error
+      >
+      <mat-error *ngIf="formValue('direccionProveedor').errors?.maxlength"
+        >Máximo 20 carácteres</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="largo">
+      <mat-label>Teléfono o Fijo</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="telefonoProveedor"
+        required
+      />
+      <mat-error *ngIf="formValue('telefonoProveedor').errors?.required"
+        >Requerido</mat-error
+      >
+      <mat-error *ngIf="formValue('telefonoProveedor').errors?.singlePhone"
+        >Teléfono Existente</mat-error
+      >
+      <mat-error *ngIf="formValue('telefonoProveedor').errors?.pattern"
+        >Solo números</mat-error
+      >
+      <mat-error
+        *ngIf="
+          formValue('telefonoProveedor').errors?.maxlength &&
+          !formValue('telefonoProveedor').errors?.pattern
+        "
+        >Máximo 7 carácteres</mat-error
+      >
+      <mat-error
+        *ngIf="
+          formValue('telefonoProveedor').errors?.minlength &&
+          !formValue('telefonoProveedor').errors?.pattern
+        "
+        >Mínimo 10 carácteres</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="largo">
+      <mat-label>Url</mat-label>
+      <input type="text" matInput formControlName="urlProveedor" required />
+      <mat-error *ngIf="formValue('urlProveedor').errors?.required"
+        >Requerido</mat-error
+      >
+      <mat-error *ngIf="formValue('urlProveedor').errors?.singleUrl"
+        >Url Existente</mat-error
+      >
+      <mat-error *ngIf="formValue('urlProveedor').errors?.maxlength"
+        >Máximo 100 carácteres</mat-error
+      >
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button type="button" class="boton" mat-raised-button (click)="close()">
+      Cancelar
+    </button>
+    <button class="boton" mat-raised-button color="primary">
+      {{ provider ? "Actualizar" : "Guardar" }}
+    </button>
+  </div>
+</form>

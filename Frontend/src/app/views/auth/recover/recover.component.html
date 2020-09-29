@@ -1,0 +1,49 @@
+<mat-card>
+  <mat-card-header>
+    <a mat-card-avatar class="header-image" [routerLink]="['/']"></a>
+  </mat-card-header>
+  <mat-card-title>Recuperar Contraseña</mat-card-title>
+  <mat-card-content>
+    <form
+      [formGroup]="formRecover"
+      autocomplete="off"
+      (ngSubmit)="recover(formRecover.value)"
+    >
+      <div *ngIf="!send; else sendView">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Correo electrónico</mat-label>
+            <input
+              matInput
+              placeholder="Ej. rafael@ejemplo.com"
+              (paste)="(false)"
+              formControlName="correo"
+              required
+            />
+            <mat-error *ngIf="mail.errors?.required">Requerido</mat-error>
+            <mat-error *ngIf="mail.errors?.pattern">Correo inválido</mat-error>
+          </mat-form-field>
+        </p>
+        <div>
+          <button mat-raised-button color="primary">
+            Recuperar
+            <mat-progress-bar *ngIf="loading" mode="buffer"></mat-progress-bar>
+          </button>
+        </div>
+      </div>
+      <ng-template #sendView>
+        <p class="pc">
+          <mat-icon>check</mat-icon>
+          Se ha enviado un correo electrónico con un enlace para restablecer su
+          contraseña, si no aparece en la bandeja principal revisa en la parte
+          de los spam o correo no deseado.
+        </p>
+        <div>
+          <button mat-raised-button color="primary" routerLink="/ingresar">
+            Regresar
+          </button>
+        </div>
+      </ng-template>
+    </form>
+  </mat-card-content>
+</mat-card>

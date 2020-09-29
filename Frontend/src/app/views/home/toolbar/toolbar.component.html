@@ -1,0 +1,111 @@
+<mat-toolbar color="primary" class="sticky">
+  <mat-toolbar-row fxLayoutAlign="space-between center">
+    <div fxLayout="row">
+      <a mat-button class="logo" *ngIf="deviceLg || deviceMd" routerLink="/">
+        <img src="../../../assets/img/banner.png" alt="banner" />
+      </a>
+      <button
+        *ngIf="deviceXs || deviceSm"
+        fxFlex="10"
+        mat-button
+        routerLink="/"
+      >
+        <img src="../../../assets/img/logo.png" alt="logo" />
+      </button>
+    </div>
+    <div *ngIf="deviceLg" fxlayout="row" fxFlex="{{ fxFlex }}">
+      <a mat-button routerLink="/">
+        <mat-icon>home</mat-icon><span class="logoMd">Inicio</span>
+      </a>
+      <a mat-button routerLink="/productos">
+        <mat-icon>devices</mat-icon><span class="logoMd">Productos</span>
+      </a>
+      <a mat-button>
+        <mat-icon>category</mat-icon><span class="logoMd">Categorías</span>
+      </a>
+      <a mat-button>
+        <mat-icon>info</mat-icon><span class="logoMd">Sobre Nosotros</span>
+      </a>
+      <a mat-button>
+        <mat-icon>phone</mat-icon><span class="logoMd">Contáctanos</span>
+      </a>
+    </div>
+    <div *ngIf="!deviceLg && !deviceXs" fxlayout="row" fxFlex="{{fxFlex}}">
+      <button class="btnSm" mat-icon-button routerLink="/">
+        <mat-icon>home</mat-icon>
+      </button>
+      <button class="btnSm" mat-icon-button routerLink="/productos">
+        <mat-icon>devices</mat-icon>
+      </button>
+      <button class="btnSm" mat-icon-button>
+        <mat-icon>category</mat-icon>
+      </button>
+      <button class="btnSm" mat-icon-button><mat-icon>info</mat-icon></button>
+      <button class="btnSm" mat-icon-button>
+        <mat-icon>phone</mat-icon>
+      </button>
+    </div>
+    <div fxLayoutAlign="end">
+      <!-- <button
+        mat-button
+        *ngIf="rol && user"
+        routerLink="/admin/inicio"
+      >
+        Admin</button
+      ><button
+        mat-button
+        *ngIf="user; else showMenuLogin"
+        (click)="logout()"
+      >
+        Cerrar sesión
+      </button> -->
+      <button
+        *ngIf="user; else showMenuLogin"
+        mat-button
+        [matMenuTriggerFor]="menuPerson"
+      >
+        <mat-icon>account_circle</mat-icon>
+        <span class="logoMd">{{ username }}</span>
+      </button>
+      <ng-template #showMenuLogin>
+        <button mat-button routerLink="/ingresar">Iniciar sesión</button>
+        <button mat-button routerLink="/registrarse">Regístrate</button>
+      </ng-template>
+      <button *ngIf="deviceXs" mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>apps</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-menu #menuPerson="matMenu">
+  <button mat-menu-item *ngIf="rol && user" routerLink="/admin/inventario">
+    <mat-icon>bar_chart</mat-icon><span>Admin</span>
+  </button>
+  <button mat-menu-item *ngIf="user; else showMenuLogin" (click)="logout()">
+    <mat-icon>power_settings_new</mat-icon><span>Cerrar sesión</span>
+  </button>
+  <ng-template #showMenuLogin>
+    <button mat-menu-item routerLink="/ingresar">Iniciar sesión</button>
+    <button mat-menu-item routerLink="/registrarse">Regístrate</button>
+  </ng-template>
+</mat-menu>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item routerLink="/">
+    <mat-icon>home</mat-icon><span>Inicio</span>
+  </button>
+  <button mat-menu-item routerLink="/productos">
+    <mat-icon>devices</mat-icon><span>Productos</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>category</mat-icon><span>Categorías</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>info</mat-icon><span>Sobre Nosotros</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>phone</mat-icon><span>Contáctanos</span>
+  </button>
+</mat-menu>
+<router-outlet></router-outlet>
